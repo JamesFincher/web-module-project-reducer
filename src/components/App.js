@@ -1,11 +1,56 @@
 import React from "react";
 import reducer, { initialState } from "../reducers/index";
+import {
+  ADD_ONE,
+  APPLY_NUMBER,
+  CHANGE_OPERATION,
+  addOne,
+  applyNumber,
+  changeOperation,
+  clearDisplay,
+  memClear,
+  memStore,
+  memRecall,
+  MEM_CLEAR,
+} from "../actions/index";
 import "./App.css";
 
 import TotalDisplay from "./TotalDisplay";
 import CalcButton from "./CalcButton";
 
 function App() {
+  //useReducer is the equivalent of const [state, dispatch] = useState(initialState);
+  const [state, dispatch] = React.useReducer(reducer, initialState);
+
+  //is called by onClick to handle the dispatch to the reducer
+  const incrementHandle = (e) => {
+    console.log(e.target.value);
+    dispatch(addOne(e.target.value));
+  };
+
+  const numHandle = (e) => {
+    console.log(e.target.value);
+    dispatch(applyNumber(e.target.value));
+  };
+
+  const opHandle = (e) => {
+    console.log("Operator being updated to....", e.target.value);
+    dispatch(changeOperation(e.target.value));
+  };
+
+  const ceHandle = () => {
+    dispatch(clearDisplay());
+  };
+  const mClear = () => {
+    dispatch(memClear());
+  };
+
+  const mPlus = () => {
+    dispatch(memStore());
+  };
+  const mRecall = () => {
+    dispatch(memRecall());
+  };
   return (
     <div className="App">
       <nav className="navbar navbar-dark bg-dark">
@@ -18,48 +63,48 @@ function App() {
       <div className="container row mt-5">
         <div className="col-md-12 d-flex justify-content-center">
           <form name="Cal">
-            <TotalDisplay value={0} />
+            <TotalDisplay value={state.total} />
             <div className="row details">
               <span id="operation">
-                <b>Operation:</b> X
+                <b>Operation:</b> {state.operation}
               </span>
               <span id="memory">
-                <b>Memory:</b> 0
+                <b>Memory:</b> {state.memory}
               </span>
             </div>
 
             <div className="row">
-              <CalcButton value={"M+"} />
-              <CalcButton value={"MR"} />
-              <CalcButton value={"MC"} />
+              <CalcButton value={"M+"} onClick={() => mPlus()} />
+              <CalcButton value={"MR"} onClick={() => mRecall()} />
+              <CalcButton value={"MC"} onClick={() => mClear()} />
             </div>
 
             <div className="row">
-              <CalcButton value={1} />
-              <CalcButton value={2} />
-              <CalcButton value={3} />
+              <CalcButton value={1} onClick={(e) => numHandle(e)} />
+              <CalcButton value={2} onClick={(e) => numHandle(e)} />
+              <CalcButton value={3} onClick={(e) => numHandle(e)} />
             </div>
 
             <div className="row">
-              <CalcButton value={4} />
-              <CalcButton value={5} />
-              <CalcButton value={6} />
+              <CalcButton value={4} onClick={(e) => numHandle(e)} />
+              <CalcButton value={5} onClick={(e) => numHandle(e)} />
+              <CalcButton value={6} onClick={(e) => numHandle(e)} />
             </div>
 
             <div className="row">
-              <CalcButton value={7} />
-              <CalcButton value={8} />
-              <CalcButton value={9} />
+              <CalcButton value={7} onClick={(e) => numHandle(e)} />
+              <CalcButton value={8} onClick={(e) => numHandle(e)} />
+              <CalcButton value={9} onClick={(e) => numHandle(e)} />
             </div>
 
             <div className="row">
-              <CalcButton value={"+"} />
-              <CalcButton value={"*"} />
-              <CalcButton value={"-"} />
+              <CalcButton value={"+"} onClick={(e) => opHandle(e)} />
+              <CalcButton value={"*"} onClick={(e) => opHandle(e)} />
+              <CalcButton value={"-"} onClick={(e) => opHandle(e)} />
             </div>
 
             <div className="row ce_button">
-              <CalcButton value={"CE"} />
+              <CalcButton value={"CE"} onClick={() => ceHandle()} />
             </div>
           </form>
         </div>
