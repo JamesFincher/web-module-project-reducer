@@ -38,17 +38,17 @@ function App() {
     dispatch(changeOperation(e.target.value));
   };
 
-  const ceHandle = () => {
+  const clearDisplayHandle = () => {
     dispatch(clearDisplay());
   };
-  const mClear = () => {
+  const memClearHandle = () => {
     dispatch(memClear());
   };
 
-  const mPlus = () => {
+  const memPlusHandle = () => {
     dispatch(memStore());
   };
-  const mRecall = () => {
+  const memRecallHandle = () => {
     dispatch(memRecall());
   };
   return (
@@ -74,9 +74,9 @@ function App() {
             </div>
 
             <div className="row">
-              <CalcButton value={"M+"} onClick={() => mPlus()} />
-              <CalcButton value={"MR"} onClick={() => mRecall()} />
-              <CalcButton value={"MC"} onClick={() => mClear()} />
+              <CalcButton value={"M+"} onClick={() => memPlusHandle()} />
+              <CalcButton value={"MR"} onClick={() => memRecallHandle()} />
+              <CalcButton value={"MC"} onClick={() => memClearHandle()} />
             </div>
 
             <div className="row">
@@ -104,7 +104,7 @@ function App() {
             </div>
 
             <div className="row ce_button">
-              <CalcButton value={"CE"} onClick={() => ceHandle()} />
+              <CalcButton value={"CE"} onClick={() => clearDisplayHandle()} />
             </div>
           </form>
         </div>
